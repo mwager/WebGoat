@@ -33,6 +33,9 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.util.SocketUtils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.lang.reflect.Method;
 
 import static java.util.Optional.of;
@@ -46,9 +49,13 @@ public class StartWebGoat {
 
     private static final int MAX_PORT = 9999;
 
+    private static final Logger logger = LogManager.getLogger("Log4shellApplication");
+
     public static void main(String[] args) {
         setEnvironmentVariableForPort(WEBGOAT_PORT, "8080");
         setEnvironmentVariableForPort(WEBWOLF_PORT, "9090");
+
+        logger.info("logging user input: ", args[0]);
 
         new SpringApplicationBuilder().parent(ParentConfig.class)
                 .web(WebApplicationType.NONE).bannerMode(Banner.Mode.OFF)
